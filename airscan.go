@@ -221,8 +221,8 @@ func (s *ScanState) ScanPage() bool {
 		s.err = err
 		return false
 	}
-	resp, err := s.scanner.do(req, http.StatusOK, http.StatusNotFound)
-	if resp != nil && resp.StatusCode == http.StatusNotFound {
+	resp, err := s.scanner.do(req, http.StatusOK, http.StatusNotFound, http.StatusServiceUnavailable)
+	if resp != nil && (resp.StatusCode == http.StatusNotFound || resp.StatusCode == http.StatusServiceUnavailable) {
 		if debug {
 			log.Printf("NotFound: all pages received")
 		}
